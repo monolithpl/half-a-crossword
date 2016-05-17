@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300' rel='stylesheet' type='text/css'>
+<style>
+#words {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.9);
+	margin: 50px 0 40px 0;
+	border: 1px solid #ccc;
+	position: relative;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
+				0 25px 50px 0 rgba(0, 0, 0, 0.15);
+}
+
+#words:before {
+	content: '';
+	border-left: 1px solid #f5d6d6;
+	border-right: 1px solid #f5d6d6;
+	width: 2px;
+	position: absolute;
+	top: 0;
+	left: 40px;
+	height: 100%;
+}
+
+#words input::-webkit-input-placeholder {
+	font-style: italic;
+}
+
+#words input::-moz-placeholder {
+	font-style: italic;
+	color: #a9a9a9;
+}
+
+#words h1 {
+	position: absolute;
+	top: -50px;
+	width: 100%;
+	font-size: 40px;
+	line-height: 35px;
+	font-weight: bold;
+	text-align: center;
+	color: #b3b3b3;
+	color: rgba(255, 255, 255, 0.3);
+	text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
+	-webkit-text-rendering: optimizeLegibility;
+	-moz-text-rendering: optimizeLegibility;
+	-ms-text-rendering: optimizeLegibility;
+	-o-text-rendering: optimizeLegibility;
+	text-rendering: optimizeLegibility;
+}
+
+#header {
+	padding-top: 12px;
+	border-radius: inherit;
+}
+
+#header:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 15px;
+	z-index: 2;
+	border-bottom: 1px solid #6c615c;
+	background: #8d7d77;
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(132, 110, 100, 0.8)),to(rgba(101, 84, 76, 0.8)));
+	background: -webkit-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	background: -moz-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	background: -o-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	background: -ms-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	background: linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#9d8b83', EndColorStr='#847670');
+	border-top-left-radius: 1px;
+	border-top-right-radius: 1px;
+}
+
+#word-new,
+.edit {
+	position: relative;
+	margin: 0;
+	width: 100%;
+	font-size: 14px;
+	font-family: inherit;
+	line-height: 1.4em;
+	border: 0;
+	outline: none;
+	color: inherit;
+	padding: 6px;
+	border: 1px solid #999;
+	box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-ms-font-smoothing: antialiased;
+	-o-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+
+#word-new {
+	padding: 16px 16px 10px 60px;
+	border: none;
+	background: rgba(0, 0, 0, 0.02);
+	z-index: 2;
+	box-shadow: none;
+}
+
+#main {
+	position: relative;
+	z-index: 2;
+	border-top: 1px dotted #adadad;
+}
+
+#word-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#word-list li {
+	position: relative;
+	font-size: 14px;
+	border-bottom: 1px dotted #ccc;
+}
+
+#word-list li:last-child {
+	border-bottom: none;
+}
+
+#word-list li.editing {
+	border-bottom: none;
+	padding: 0;
+}
+
+#word-list li.editing .edit {
+	display: block;
+	width: 506px;
+	padding: 13px 17px 12px 17px;
+	margin: 0 0 0 43px;
+}
+
+#word-list li.editing .view {
+	display: none;
+}
+
+#word-list li .toggle {
+	text-align: center;
+	width: 40px;
+	height: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto 0;
+	border: none;
+	-webkit-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+}
+
+#word-list li label {
+	word-break: break-word;
+	padding: 15px;
+	margin-left: 45px;
+	display: block;
+	line-height: 0.6;
+	-webkit-transition: color 0.4s;
+	-moz-transition: color 0.4s;
+	-ms-transition: color 0.4s;
+	-o-transition: color 0.4s;
+	transition: color 0.4s;
+}
+
+#word-list li.completed label {
+	color: #a9a9a9;
+	text-decoration: line-through;
+}
+
+#word-list li .destroy {
+	display: none;
+	border: none;
+	background: none;
+	position: absolute;
+	top: 0;
+	right: 10px;
+	bottom: 0;
+	width: 40px;
+	height: 40px;
+	margin: auto 0;
+	font-size: 22px;
+	color: #a88a8a;
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+#word-list li .destroy:hover {
+	text-shadow: 0 0 1px #000,
+				 0 0 10px rgba(199, 107, 107, 0.8);
+	-webkit-transform: scale(1.3);
+	-moz-transform: scale(1.3);
+	-ms-transform: scale(1.3);
+	-o-transform: scale(1.3);
+	transform: scale(1.3);
+}
+
+#word-list li .destroy:after {
+	content: '✖';
+}
+
+#word-list li:hover .destroy {
+	display: block;
+}
+
+#word-list li .edit {
+	display: none;
+}
+
+#word-list li.editing:last-child {
+	margin-bottom: -1px;
+}
+
+#footer {
+	color: #777;
+	padding: 0 15px;
+	position: absolute;
+	right: 0;
+	bottom: -31px;
+	left: 0;
+	height: 20px;
+	z-index: 1;
+	text-align: center;
+}
+
+#footer:before {
+	content: '';
+	position: absolute;
+	right: 0;
+	bottom: 31px;
+	left: 0;
+	height: 40px;
+	z-index: -1;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3),
+				0 6px 0 -3px rgba(255, 255, 255, 0.8),
+				0 7px 1px -3px rgba(0, 0, 0, 0.3),
+				0 33px 0 -6px rgba(255, 255, 255, 0.8),
+				0 34px 2px -6px rgba(0, 0, 0, 0.2);
+}
+#crossword {
+    text-align:center;
+}
+
+.crossword {
+    border-collapse:collapse;
+    font-family: 'PT Mono', "Courier New", Courier, monospace;
+	font-weight: bold;
+    margin-left:auto;
+    margin-right:auto;
+    clear:both;
+    margin-top:10px;
+    margin-bottom:10px;
+	border:3px solid #e8e8e8;
+}
+
+.crossword td {
+    border:3px solid black;
+    padding:0;
+    margin:0;
+    vertical-align:middle;
+    padding:0;
+    text-align:center;
+    width:25px;
+    height:25px;
+}
+.crossword .no-border {
+    border:none;
+	background: #e8e8e8;
+}
+
+h1, #clues {
+	font-family: 'Merriweather', serif;
+    margin:auto;
+}
+
+#clues td {
+    vertical-align:top;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  color: #000000;
+  line-height: 1.5em;
+  background-color: #eeeeee;
+}
+
+h2 {
+  width: 100%;
+  border: 1px solid #ddd;
+  background-color: #eeeeee;
+  margin: 0 0 10px 0;
+  padding: 10px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h3 {
+  margin: 10px 0;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.wrapper {
+  width: 100%;
+  text-align: center; /* center hack */
+}
+
+.container {
+  text-align: left;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 auto; /* center hack */
+  padding: 20px;
+}
+
+.header-main {
+  display: block;
+  width: 100%;
+  height: 80px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 0 20px 0;
+  padding: 20px;
+}
+
+.main {
+  word-wrap: break-word;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.two-column {
+  float: none;
+  width: auto;
+  overflow: hidden;
+}
+
+.side-a {
+  float: left;
+  position: relative;
+  width: 300px;
+  word-wrap: break-word;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-right: 20px;
+  padding: 20px;
+}
+
+.main-menu ul {
+  list-style: none;
+}
+
+.main-menu li {
+  margin-bottom: 10px;
+}
+
+.main-menu li:last-child {
+  margin-bottom: 0;
+}
+
+.main-menu a:link,
+.main-menu a:visited {
+  display: block;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+  background-color: #dddddd;
+  padding: 8px 10px;
+}
+
+.main-menu a:hover {
+  color: #ffffff;
+  background-color: #cccccc;
+}
+
+/* media queries */
+@media only screen and (max-width: 767px) {
+  .container {
+    width: 100%;
+    max-width: 767px;
+  }
+  
+  .side-a {
+    float: none;
+    position: static;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}</style></head><body>
+<div id="wrapper" class="wrapper">
+  <div id="container" class="container">
+    <header id="header-main" class="header-main" role="banner">
+      <h1>Half a Crossword ESL Wizard</h1>
+    </header>
+    <div id="side-a" class="side-a">
+      <nav id="main-menu" class="main-menu" role="navigation">
+       <div id="words">
+			<header id="header">
+				<h1>my words</h1>
+				<input id="word-new" placeholder="enter new words here" autofocus>
+			</header>
+			<div id="main">
+				<ul id="word-list"></ul>
+			</div>
+			<footer id="footer">
+				<span id="word-count"><strong></strong></span>
+			</footer>
+		</div>
+      </nav>
+    </div>
+    <div id="main" class="main  two-column">
+      <h1>Preview</h1>
+		<div id="crossword"></div>
+		<table id="clues">
+			<thead>
+				<tr>
+					<th>Across</th>
+					<th>Down</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><ul id="across"></ul></td>
+					<td><ul id="down"></ul></td>
+				</tr>
+			</tbody>
+		</table>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="crossword.min.js"></script>
+</html>
