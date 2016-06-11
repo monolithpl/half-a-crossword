@@ -23,4 +23,5 @@ Read up on the usefulness of half-a-crossword activities in EFL classrooms here:
 - [Игровые методики в обучении иностранному языку для профессиональной коммуникации, ВО Иванова](http://kguki.com/content/cms/files/21272.pdf#page=71)
 
 MIT License
+
 Copyright 2016 Wiktor Jakubczyc
