@@ -5,6 +5,18 @@
 <link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300' rel='stylesheet' type='text/css'>
 <style>
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+	table {page-break-inside: avoid;}
+}
+#word-count {
+	top: -0.4em;
+    position: relative;
+}
 #words {
 	background: #fff;
 	background: rgba(255, 255, 255, 0.9);
@@ -27,6 +39,7 @@
 	left: 40px;
 	height: 100%;
 }
+li { list-style-type: none;}
 
 #words input::-webkit-input-placeholder {
 	font-style: italic;
@@ -260,6 +273,8 @@
 }
 #crossword {
     text-align:center;
+	font-family: 'Merriweather', serif;
+	font-size: 15px;
 }
 
 .crossword {
@@ -289,11 +304,35 @@
 	background: #e8e8e8;
 }
 
+.titles {
+	text-align: center;
+	padding: 15px;
+}
+
 h1, #clues {
 	font-family: 'Merriweather', serif;
     margin:auto;
 }
 
+#scissors {
+    height: 43px; /* image height */
+    width: 90%;
+    margin: auto auto;
+    background-image: url('numbers/scissors.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    position: relative;
+}
+#scissors div {
+    position: relative;
+    top: 50%;
+    border-top: 1px dashed black;
+    margin-top: -3px;
+}
+
+#clues {
+    border-spacing: 150px 0px;
+}
 #clues td {
     vertical-align:top;
 }
@@ -311,36 +350,9 @@ html, body {
   background-color: #eeeeee;
 }
 
-h2 {
-  width: 100%;
-  border: 1px solid #ddd;
-  background-color: #eeeeee;
-  margin: 0 0 10px 0;
-  padding: 10px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-h3 {
-  margin: 10px 0;
-}
-
-h4 {
-  font-size: 16px;
-}
-
-p {
-  margin-bottom: 10px;
-}
-
-p:last-child {
-  margin-bottom: 0;
-}
-
 .wrapper {
   width: 100%;
-  text-align: center; /* center hack */
+  text-align: center;
 }
 
 .container {
@@ -348,7 +360,7 @@ p:last-child {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  margin: 0 auto; /* center hack */
+  margin: 0 auto;
   padding: 20px;
 }
 
@@ -401,30 +413,6 @@ p:last-child {
   list-style: none;
 }
 
-.main-menu li {
-  margin-bottom: 10px;
-}
-
-.main-menu li:last-child {
-  margin-bottom: 0;
-}
-
-.main-menu a:link,
-.main-menu a:visited {
-  display: block;
-  font-weight: bold;
-  color: #000000;
-  text-decoration: none;
-  background-color: #dddddd;
-  padding: 8px 10px;
-}
-
-.main-menu a:hover {
-  color: #ffffff;
-  background-color: #cccccc;
-}
-
-/* media queries */
 @media only screen and (max-width: 767px) {
   .container {
     width: 100%;
@@ -441,10 +429,10 @@ p:last-child {
 }</style></head><body>
 <div id="wrapper" class="wrapper">
   <div id="container" class="container">
-    <header id="header-main" class="header-main" role="banner">
+    <header id="header-main" class="header-main no-print" role="banner">
       <h1>Half a Crossword ESL Wizard</h1>
     </header>
-    <div id="side-a" class="side-a">
+    <div id="side-a" class="side-a no-print">
       <nav id="main-menu" class="main-menu" role="navigation">
        <div id="words">
 			<header id="header">
@@ -455,31 +443,20 @@ p:last-child {
 				<ul id="word-list"></ul>
 			</div>
 			<footer id="footer">
-				<span id="word-count"><strong></strong></span>
+				<span id="word-count">hit enter to add word</span>
 			</footer>
 		</div>
       </nav>
     </div>
-    <div id="main" class="main  two-column">
-      <h1>Preview</h1>
-		<div id="crossword"></div>
-		<table id="clues">
-			<thead>
-				<tr>
-					<th>Across</th>
-					<th>Down</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><ul id="across"></ul></td>
-					<td><ul id="down"></ul></td>
-				</tr>
-			</tbody>
-		</table>
+    <div id="main" class="main two-column">
+		<div id="crossword">To create your half a crossword, enter some words in the panel on the left.</div>
+	  </br>
+		<div id="clues-wrapper">
+			<div id="clues-header"></div><table id="clues"></table>
+		</div>
     </div>
   </div>
 </div>
 </body>
-<script type="text/javascript" src="crossword.min.js"></script>
+<script type="text/javascript" src="crossword.js"></script>
 </html>
