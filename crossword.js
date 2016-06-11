@@ -72,6 +72,7 @@ function Crossword(words_in, clues_in){
 
     // returns an abitrary grid, or null if it can't build one
     this.getGrid = function(max_tries){
+		if (!word_elements[0]) return null;
         for(var tries = 0; tries < max_tries; tries++){
             clear(); // always start with a fresh grid and char_index
             // place the first word in the middle of the grid
@@ -390,8 +391,8 @@ var CrosswordUtils = {
         if(grid == null) return;
         var html = [];
         for (var ss = 0; ss < 2; ss++) {
-			if (ss == 0) html.push("<h1>Student A</h1>")
-				else html.push("<h1>Student B</h1>")
+			if (ss == 0) html.push("<h1 class='titles'>Student A</h1>")
+				else html.push("<div id='scissors'><div></div></div><h1 class='titles'>Student B</h1>")
 			html.push("<table class='crossword'>");
 			var label = 1;
 			for(var r = 0; r < grid.length; r++){
@@ -442,12 +443,13 @@ function createCrossword(words, clues){
     var grid = cw.getSquareGrid(tries);
 
     if(grid == null){
-        var bad_words = cw.getBadWords();
+		var bad_words = cw.getBadWords();
         var str = [];
         for(var i = 0; i < bad_words.length; i++){
             str.push(bad_words[i].word);
         }
-        //alert("Shoot! A grid could not be created with these words:\n" + str.join("\n"));
+        document.getElementById("crossword").innerHTML = 'Add more words - a crossword could not be created with these:' + str.join(',');
+		document.getElementById("clues-wrapper").innerHTML = '<div id="clues-header"></div><table id="clues"></table>';
         return;
     }
 
@@ -459,10 +461,12 @@ function createCrossword(words, clues){
 }
 
 window.onload = function(){
-	//createCrossword(["dog", "cat", "bat", "elephant", "kangaroo"],["dog", "cat", "bat", "elephant", "kangaroo"]);
+	//createCrossword(["LEARNING", "DOING", "SPEAKING", "ENGLISH"],["LEARNING", "DOING", "SPEAKING", "ENGLISH"]);
 };
 
 function addLegendToPage(groups){
+	document.getElementById('clues-header').innerHTML = "<div id='scissors'><div></div></div><h1 class='titles'>Teacher Sheet</h1></br>";
+	document.getElementById('clues').innerHTML = '<thead><tr><th>Across</th><th>Down</th></tr></thead><tbody><tr><td><ul id="across"></ul></td><td><ul id="down"></ul></td></tr></tbody>';
     for(var k in groups){
         var html = [];
         for(var i = 0; i < groups[k].length; i++){
@@ -479,6 +483,7 @@ var wordArray = [];
 
 function updateCount(){
 	if (list.children.length > 1) count.innerHTML = list.children.length + ' words'
+	else if (list.children.length == 0) count.innerHTML = 'hit enter to add word'
 	else count.innerHTML = list.children.length + ' word'
 }
 
@@ -486,8 +491,10 @@ list.addEventListener("click", function(event) {
     if (event.target !== event.currentTarget) {
         if (event.target.className == "destroy")
 		{
-			event.target.parentElement.parentNode.removeChild(event.target.parentElement);
-			updateCount();
+			wordArray.splice(wordArray.indexOf(event.target.parentElement.getElementsByTagName("LABEL")[0].innerHTML), 1);
+			event.target.parentElement.parentNode.removeChild(event.target.parentElement)
+			updateCount()
+			createCrossword(wordArray, wordArray)
 		}
     }
     event.stopPropagation();
@@ -496,12 +503,12 @@ list.addEventListener("click", function(event) {
 newWord.addEventListener("keypress", function(event) {
     if (event.keyCode == 13)
 	{
-		var entry = document.createElement('li');
-		entry.innerHTML = '<label>' + newWord.value + '</label><button class="destroy"></button>';
-		list.insertBefore(entry, list.childNodes[0]);
-		wordArray.push(newWord.value);
-		createCrossword(wordArray, wordArray);
-		newWord.value = '';
-		updateCount();
+		var entry = document.createElement('li')
+		entry.innerHTML = '<label>' + newWord.value + '</label><button class="destroy"></button>'
+		list.insertBefore(entry, list.childNodes[0])
+		wordArray.push(newWord.value)
+		createCrossword(wordArray, wordArray)
+		newWord.value = ''
+		updateCount()
 	}
 });
