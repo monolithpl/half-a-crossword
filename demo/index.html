@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html>
-<title>Half a Crossword ESL Wizard</title>
+<title>Half a Crossword</title>
 <head>
 <meta charset="utf-8">
 <link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300' rel='stylesheet' type='text/css'>
 <style>
+button {
+	padding: 5px;
+	cursor: pointer;
+	border: 2px solid black;
+	background-color: white;
+	color: black;
+	font-family: 'Merriweather', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+}
+button:hover{
+	background-color: black;
+	color: white;
+}
 @media print
 {    
-    .no-print, .no-print *
-    {
-        display: none !important;
-    }
-	table {page-break-inside: avoid;}
+    .no-print, .no-print * {display: none !important;}
+	html, body {background-color: white !important;}
+	table {page-break-inside: avoid !important;}
+	#crosswords {border: 1px solid white;}
 }
 #word-count {
 	top: -0.4em;
@@ -95,8 +108,12 @@ li { list-style-type: none;}
 	border-top-right-radius: 1px;
 }
 
-#word-new,
-.edit {
+#mainwords {
+	position: relative;
+	z-index: 2;
+}
+
+#word-new, .edit {
 	position: relative;
 	margin: 0;
 	width: 100%;
@@ -127,12 +144,6 @@ li { list-style-type: none;}
 	background: rgba(0, 0, 0, 0.02);
 	z-index: 2;
 	box-shadow: none;
-}
-
-#main {
-	position: relative;
-	z-index: 2;
-	border-top: 1px dotted #adadad;
 }
 
 #word-list {
@@ -310,14 +321,19 @@ li { list-style-type: none;}
 	padding: 15px;
 }
 
-h1, #clues {
+#clues {
 	font-family: 'Merriweather', serif;
     margin:auto;
 }
+h1, h3 {
+	font-family: 'Merriweather', serif;
+    margin:auto;
+	line-height: 20px;
+}
 
 #scissors {
-    height: 43px; /* image height */
-    width: 90%;
+    height: 43px;
+    width: 100%;
     margin: auto auto;
     background-image: url('numbers/scissors.png');
     background-repeat: no-repeat;
@@ -327,7 +343,7 @@ h1, #clues {
 #scissors div {
     position: relative;
     top: 50%;
-    border-top: 1px dashed black;
+    border-top: 1px dashed black !important;
     margin-top: -3px;
 }
 
@@ -431,7 +447,8 @@ html, body {
 <div id="wrapper" class="wrapper">
   <div id="container" class="container">
     <header id="header-main" class="header-main no-print" role="banner">
-      <h1>Half a Crossword ESL Wizard</h1>
+      <h1>Half a Crossword</h1>
+	  <h3>for ESL conversation classes</h3>
     </header>
     <div id="side-a" class="side-a no-print">
       <nav id="main-menu" class="main-menu" role="navigation">
@@ -440,7 +457,7 @@ html, body {
 				<h1>my words</h1>
 				<input id="word-new" placeholder="enter new words here" autofocus>
 			</header>
-			<div id="main">
+			<div id="mainwords">
 				<ul id="word-list"></ul>
 			</div>
 			<footer id="footer">
@@ -449,8 +466,8 @@ html, body {
 		</div>
       </nav>
     </div>
-    <div id="main" class="main two-column">
-		<div id="crossword">To create your half a crossword, enter some words in the panel on the left.</div>
+    <div id="crosswords" class="main two-column">
+		<div id="crossword">To create your half a crossword, enter some words in the panel on the left.</br>Or for a quick demo click here: <button id="demo">demo</button></div>
 	  </br>
 		<div id="clues-wrapper">
 			<div id="clues-header"></div><table id="clues"></table>
