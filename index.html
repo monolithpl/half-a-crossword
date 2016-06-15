@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html>
-<title>Half a Crossword ESL Wizard</title>
+<title>Half a Crossword</title>
 <head>
 <meta charset="utf-8">
 <link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300' rel='stylesheet' type='text/css'>
 <style>
+button {
+	padding: 5px;
+	cursor: pointer;
+	border: 2px solid black;
+	background-color: white;
+	color: black;
+	font-family: 'Merriweather', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+}
+button:hover{
+	background-color: black;
+	color: white;
+}
 @media print
 {    
     .no-print, .no-print * {display: none !important;}
@@ -94,8 +108,12 @@ li { list-style-type: none;}
 	border-top-right-radius: 1px;
 }
 
-#word-new,
-.edit {
+#mainwords {
+	position: relative;
+	z-index: 2;
+}
+
+#word-new, .edit {
 	position: relative;
 	margin: 0;
 	width: 100%;
@@ -439,7 +457,7 @@ html, body {
 				<h1>my words</h1>
 				<input id="word-new" placeholder="enter new words here" autofocus>
 			</header>
-			<div id="main">
+			<div id="mainwords">
 				<ul id="word-list"></ul>
 			</div>
 			<footer id="footer">
@@ -449,7 +467,7 @@ html, body {
       </nav>
     </div>
     <div id="crosswords" class="main two-column">
-		<div id="crossword">To create your half a crossword, enter some words in the panel on the left.</div>
+		<div id="crossword">To create your half a crossword, enter some words in the panel on the left.</br>Or for a quick demo click here: <button id="demo">demo</button></div>
 	  </br>
 		<div id="clues-wrapper">
 			<div id="clues-header"></div><table id="clues"></table>
