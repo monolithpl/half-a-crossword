@@ -434,9 +434,6 @@ var CrosswordUtils = {
 }
 
 function createCrossword(words, clues){
-    //var words = ["dog", "cat", "bat", "elephant", "kangaroo"];
-    //var clues = ["Man's best friend", "Likes to chase mice", "Flying mammal", "Has a trunk", "Large marsupial"];
-
     var cw = new Crossword(words, clues);
 
     var tries = 10; 
@@ -459,10 +456,6 @@ function createCrossword(words, clues){
     var legend = cw.getLegend(grid);
     addLegendToPage(legend);
 }
-
-window.onload = function(){
-	//createCrossword(["LEARNING", "DOING", "SPEAKING", "ENGLISH"],["LEARNING", "DOING", "SPEAKING", "ENGLISH"]);
-};
 
 function addLegendToPage(groups){
 	document.getElementById('clues-header').innerHTML = "<div id='scissors'><div></div></div><h1 class='titles'>Teacher Sheet</h1></br>";
@@ -501,7 +494,7 @@ list.addEventListener("click", function(event) {
 });
 
 newWord.addEventListener("keypress", function(event) {
-    if (event.keyCode == 13)
+    if (event.keyCode == 13 && newWord.value.trim() !== '')
 	{
 		var entry = document.createElement('li')
 		entry.innerHTML = '<label>' + newWord.value + '</label><button class="destroy"></button>'
