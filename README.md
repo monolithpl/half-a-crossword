@@ -9,7 +9,7 @@ Create Half a Crossword puzzles for ESL conversation classes with this [online w
 - import wordlists from text / word files by pasting
 - printer friendly (each puzzle fits onto one A4 page)
 - perfect for recycling vocabulary in ESL classrooms
-- tiny code / no external dependencies (no jquery or react = 15k !)
+- tiny code / no external dependencies / vanilla javascript (no jquery or react = 15k !)
 - elegant, responsive layout
 
 ### screenshot / example
