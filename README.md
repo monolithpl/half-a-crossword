@@ -1,5 +1,5 @@
 # half-a-crossword
-Create Half a Crossword puzzles for ESL conversation classes with this [online wizard](http://monolithpl.github.io/half-a-crossword/demo)
+Create Half a Crossword puzzles for ESL conversation classes with this [online wizard](http://monolithpl.github.io/half-a-crossword)
 
 ### features
 - design your own half a crossword from custom wordlist
@@ -16,7 +16,7 @@ Create Half a Crossword puzzles for ESL conversation classes with this [online w
 ![screenshot](http://monolithpl.github.io/half-a-crossword/screenshot.png "screenshot")
 
 ### demo
-[check it out here](http://monolithpl.github.io/half-a-crossword/demo)
+[check it out here](http://monolithpl.github.io/half-a-crossword)
 
 ### further reading
 Read up on the usefulness of half-a-crossword activities in EFL classrooms here:
