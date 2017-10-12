@@ -13,7 +13,7 @@ Create Half a Crossword puzzles for ESL conversation classes with this [online w
 - elegant, responsive layout
 
 ### screenshot / example
-![screenshot](http://monolithpl.github.io/half-a-crossword/screenshot.png "screenshot")
+[![half a crossword screenshot](http://monolithpl.github.io/half-a-crossword/screenshot.png)](http://monolithpl.github.io/half-a-crossword)
 
 ### demo
 [check it out here](http://monolithpl.github.io/half-a-crossword)
