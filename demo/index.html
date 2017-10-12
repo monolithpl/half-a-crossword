@@ -6,82 +6,232 @@
 <link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300' rel='stylesheet' type='text/css'>
 <style>
-button {
+page[size="A4"] {
+	background: white;
+	width: 21cm;
+	height: 29.7cm;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 0.5cm;
+}
+
+@page {
+	size: A4;
+	margin: 0;
+	padding: 20px;
+}
+.popup {
+	position: fixed;
+	padding: 10px;
+	max-width: 500px;
+	height: 500px;
+	border-radius: 2px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	background: rgba(255,255,255,.9);
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: opacity .5s, visibility 0s linear .5s;
+	transition: opacity .5s, visibility 0s linear .5s;
+	z-index: 2;
+}
+.popup:target {
+	visibility: visible;
+	opacity: 1;
+	-webkit-transition-delay: 0s;
+	transition-delay: 0s;
+}
+.popup-close {
+	position: absolute;
+	padding: 10px;
+	max-width: 500px;
+	border-radius: 2px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	background: rgba(255,255,255,.9);
+}
+.popup .close {
+	position: absolute;
+	right: 5px;
+	top: 5px;
 	padding: 5px;
-	cursor: pointer;
-	border: 2px solid black;
-	background-color: white;
-	color: black;
-	font-family: 'Merriweather', sans-serif;
-	font-size: 18px;
+	color: #000;
+	transition: color .3s;
+	font-size: 2em;
+	line-height: .6em;
 	font-weight: bold;
 }
-button:hover{
-	background-color: black;
-	color: white;
-}
-@media print
-{    
-    .no-print, .no-print * {display: none !important;}
-	html, body {background-color: white !important;}
-	table {page-break-inside: avoid !important;}
-	#crosswords {border: 1px solid white;}
-}
-#word-count {
-	top: -0.4em;
-    position: relative;
-}
-#words {
-	background: #fff;
-	background: rgba(255, 255, 255, 0.9);
-	margin: 50px 0 40px 0;
-	border: 1px solid #ccc;
-	position: relative;
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
-				0 25px 50px 0 rgba(0, 0, 0, 0.15);
+.popup .close:hover {
+	color: #00E5EE;
 }
 
-#words:before {
-	content: '';
-	border-left: 1px solid #f5d6d6;
-	border-right: 1px solid #f5d6d6;
-	width: 2px;
-	position: absolute;
+.close-popup {
+	background: rgba(0,0,0,.7);
+	cursor: default;
+	position: fixed;
 	top: 0;
-	left: 40px;
-	height: 100%;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: opacity .5s, visibility 0s linear .5s;
+	transition: opacity .5s, visibility 0s linear .5s;
 }
-li { list-style-type: none;}
-
-#words input::-webkit-input-placeholder {
-	font-style: italic;
+.popup:target + .close-popup{  
+	opacity: 1;
+	visibility: visible;
+	-webkit-transition-delay: 0s;
+	transition-delay: 0s;
+}
+.instruct1 {
+	display: inline-block;
+	padding-top: 0px;
+	padding-bottom: 3px;
 }
 
-#words input::-moz-placeholder {
-	font-style: italic;
-	color: #a9a9a9;
+.instruct2 {
+	display: inline-block;
+	padding-top: 0px;
+	padding-bottom: 10px;
+}
+.h1-topic {
+	font-weight: normal;
+	text-align: left;
+	float: left;
+	font-size: 20px;
+	letter-spacing: 2px;
+	color: red; /*#153FC8;*/
+	padding-bottom: 20px;
+	padding-left: 5px;
+	display: inline;
+	margin: 0px;
 }
 
-#words h1 {
-	position: absolute;
-	top: -50px;
-	width: 100%;
-	font-size: 40px;
-	line-height: 35px;
-	font-weight: bold;
+.h1-cross {
+	font-weight: normal;
+	text-align: left;
+	float: left;
+	font-size: 20px;
+	letter-spacing: 2px;
+	color: #000000;
+	padding-bottom: 20px;
+	display: inline;
+	margin: 0px;
+}
+
+.h1-student,
+.h1-key {
+	font-weight: 600;
+	text-align: right;
+	float: right;
+	font-size: 20px;
+	letter-spacing: 2px;
+	color: #000000;
+	padding-bottom: 20px;
+	display: inline;
+	margin: 0px;
+}
+
+.h1-words {
+	font-weight: normal;
 	text-align: center;
-	color: #b3b3b3;
-	color: rgba(255, 255, 255, 0.3);
-	text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
-	-webkit-text-rendering: optimizeLegibility;
-	-moz-text-rendering: optimizeLegibility;
-	-ms-text-rendering: optimizeLegibility;
-	-o-text-rendering: optimizeLegibility;
-	text-rendering: optimizeLegibility;
+	font-size: 20px;
+	letter-spacing: normal;
+	color: #000000;
+	padding-top: 20px;
+	padding-bottom: 0px;
 }
 
+td.across1,
+td.down1 {
+	border-width: 1px;
+	border-style: solid;
+	border-right: none;
+}
+
+td.across2,
+td.down2 {
+	border-width: 1px;
+	border-style: solid;
+	border-left: none;
+}
+#cross-help {
+	text-align: center;
+	font-size: 18px;
+}
+
+#key-page {
+	display: none;
+}
+.student-puzzles,
+.key-puzzle {
+	border-collapse: collapse;
+	font-weight: bold;
+	margin-left: auto;
+	margin-right: auto;
+	clear: both;
+	margin-top: auto;
+	margin-bottom: auto;
+	border: 1px solid #ffffff;
+}
+
+#student-puzzles .word-char,
+#key-puzzle .word-char {
+	border: 1px solid black;
+	padding: 1px;
+	padding-top: 3px;
+	margin: 0px;
+	vertical-align: middle;
+	text-align: center;
+	width: 25px;
+	height: 25px;
+	font-weight: bold;
+	font-size: 22px;
+}
+
+.student-puzzles .no-border {
+	border: none;
+	padding: 1px;
+	padding-top: 3px;
+	margin: 0px;
+	vertical-align: middle;
+	text-align: center;
+	width: 25px;
+	height: 25px;
+	font-weight: bold;
+	font-size: 22px;
+}
+
+#key-words,
+#studentA-words,
+#studentB-words {
+	display: inline-block;
+	font-size: 18px;
+	padding-bottom: 20px;
+}
+
+#key-words td,
+#studentA-words td,
+#studentB-words td {
+	vertical-align: top;
+	width: 210px;
+	padding: 3px 5px 5px 5px;
+}
+
+#key-words th,
+#studentA-words th,
+#studentB-words th {
+	text-align: center;
+}
+
+#studentA-wrapper,
+#studentB-wrapper,
+#key-wrapper {
+	padding-top: 20px;
+}
 #header {
 	padding-top: 12px;
 	border-radius: inherit;
@@ -95,51 +245,78 @@ li { list-style-type: none;}
 	left: 0;
 	height: 15px;
 	z-index: 2;
-	border-bottom: 1px solid #6c615c;
-	background: #8d7d77;
-	background: -webkit-gradient(linear, left top, left bottom, from(rgba(132, 110, 100, 0.8)),to(rgba(101, 84, 76, 0.8)));
-	background: -webkit-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
-	background: -moz-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
-	background: -o-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
-	background: -ms-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
-	background: linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#9d8b83', EndColorStr='#847670');
+	border-bottom: 1px solid black;
+	background: #2a2a2a;
 	border-top-left-radius: 1px;
 	border-top-right-radius: 1px;
 }
 
-#mainwords {
+#words {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.9);
+	margin: 50px 0 40px 0;
+	border: 1px solid black;
 	position: relative;
-	z-index: 2;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 }
 
-#word-new, .edit {
+#words:after {
+	content: '';
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	width: 2px;
+	position: absolute;
+	top: 0;
+	right: 40px;
+	height: 100%;
+}
+
+#words input::-webkit-input-placeholder {
+	font-style: italic;
+}
+
+#words input::-moz-placeholder {
+	font-style: italic;
+	color: #a9a9a9;
+}
+
+#words h1 {
+	position: absolute;
+	top: -2em;
+	width: 100%;
+	font-size: 2em;
+	line-height: 1.3em;
+	font-weight: bold;
+	text-align: center;
+	color: black;
+}
+
+#words .edit {
+	position: relative;
+	margin: 0;
+	width: 100%;
+	font-size: 14px;
+	font-family: inherit;
+	font-weight: inherit;
+	line-height: 1.4em;
+	border: 0;
+	outline: none;
+	color: inherit;
+	top:-14px;
+}
+
+#word-new {
 	position: relative;
 	margin: 0;
 	width: 100%;
 	font-size: 14px;
 	font-family: inherit;
 	line-height: 1.4em;
-	border: 0;
 	outline: none;
 	color: inherit;
-	padding: 6px;
 	border: 1px solid #999;
-	box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	-o-box-sizing: border-box;
-	box-sizing: border-box;
-	-webkit-font-smoothing: antialiased;
-	-moz-font-smoothing: antialiased;
-	-ms-font-smoothing: antialiased;
-	-o-font-smoothing: antialiased;
-	font-smoothing: antialiased;
-}
-
-#word-new {
-	padding: 16px 16px 10px 60px;
+	padding: 16px 16px 10px 15px;
 	border: none;
 	background: rgba(0, 0, 0, 0.02);
 	z-index: 2;
@@ -162,22 +339,6 @@ li { list-style-type: none;}
 	border-bottom: none;
 }
 
-#word-list li.editing {
-	border-bottom: none;
-	padding: 0;
-}
-
-#word-list li.editing .edit {
-	display: block;
-	width: 506px;
-	padding: 13px 17px 12px 17px;
-	margin: 0 0 0 43px;
-}
-
-#word-list li.editing .view {
-	display: none;
-}
-
 #word-list li .toggle {
 	text-align: center;
 	width: 40px;
@@ -196,7 +357,7 @@ li { list-style-type: none;}
 #word-list li label {
 	word-break: break-word;
 	padding: 15px;
-	margin-left: 45px;
+	height: 10px;
 	display: block;
 	line-height: 0.6;
 	-webkit-transition: color 0.4s;
@@ -217,27 +378,16 @@ li { list-style-type: none;}
 	background: none;
 	position: absolute;
 	top: 0;
-	right: 10px;
+	right: 2px;
 	bottom: 0;
 	width: 40px;
 	height: 40px;
 	margin: auto 0;
 	font-size: 22px;
-	color: #a88a8a;
-	-webkit-transition: all 0.2s;
-	-moz-transition: all 0.2s;
-	-ms-transition: all 0.2s;
-	-o-transition: all 0.2s;
 	transition: all 0.2s;
 }
 
 #word-list li .destroy:hover {
-	text-shadow: 0 0 1px #000,
-				 0 0 10px rgba(199, 107, 107, 0.8);
-	-webkit-transform: scale(1.3);
-	-moz-transform: scale(1.3);
-	-ms-transform: scale(1.3);
-	-o-transform: scale(1.3);
 	transform: scale(1.3);
 }
 
@@ -249,12 +399,9 @@ li { list-style-type: none;}
 	display: block;
 }
 
-#word-list li .edit {
-	display: none;
-}
-
-#word-list li.editing:last-child {
-	margin-bottom: -1px;
+#word-list li .destroy:active  {
+	outline: none !important;
+	color: red;
 }
 
 #footer {
@@ -269,20 +416,21 @@ li { list-style-type: none;}
 	text-align: center;
 }
 
-#footer:before {
-	content: '';
-	position: absolute;
-	right: 0;
-	bottom: 31px;
-	left: 0;
-	height: 40px;
-	z-index: -1;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3),
-				0 6px 0 -3px rgba(255, 255, 255, 0.8),
-				0 7px 1px -3px rgba(0, 0, 0, 0.3),
-				0 33px 0 -6px rgba(255, 255, 255, 0.8),
-				0 34px 2px -6px rgba(0, 0, 0, 0.2);
+.demo {
+	padding: 5px;
+	cursor: pointer;
+	border: 2px solid black;
+	background-color: white;
+	color: black;
+	font-family: 'Merriweather', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
 }
+.demo:hover{
+	background-color: black;
+	color: white;
+}
+
 #crossword {
     text-align:center;
 	font-family: 'Merriweather', serif;
@@ -329,6 +477,14 @@ h1, h3 {
 	font-family: 'Merriweather', serif;
     margin:auto;
 	line-height: 20px;
+}
+
+.settingsButton {
+	float: right;
+}
+
+.settingsButton:hover {
+	transform: scale(1.3);
 }
 
 #scissors {
@@ -406,13 +562,13 @@ html, body {
   padding: 20px;
 }
 
-.two-column {
+.column-two {
   float: none;
   width: auto;
   overflow: hidden;
 }
 
-.side-a {
+.column-one {
   float: left;
   position: relative;
   width: 300px;
@@ -436,25 +592,33 @@ html, body {
     max-width: 767px;
   }
   
-  .side-a {
+  .column-one {
     float: none;
     position: static;
     width: 100%;
     margin-right: 0;
     margin-bottom: 20px;
   }
-}</style></head><body>
+}
+@media print
+{    
+    .no-print, .no-print * {display: none !important;}
+	html, body {background-color: white !important;}
+	table {page-break-inside: avoid !important;}
+	#column-two {border: 1px solid white;}
+}
+</style></head><body>
 <div id="wrapper" class="wrapper">
   <div id="container" class="container">
     <header id="header-main" class="header-main no-print" role="banner">
       <h1>Half a Crossword</h1>
 	  <h3>for ESL conversation classes</h3>
     </header>
-    <div id="side-a" class="side-a no-print">
+    <div id="column-one" class="column-one no-print">
       <nav id="main-menu" class="main-menu" role="navigation">
        <div id="words">
 			<header id="header">
-				<h1>my words</h1>
+				<h1 class="left">wordlist<span class="settingsButton"><a href="#settings" class="btn"><img src="numbers/settings.svg"></a></span></h1>
 				<input id="word-new" placeholder="enter new words here" autofocus>
 			</header>
 			<div id="mainwords">
@@ -466,15 +630,27 @@ html, body {
 		</div>
       </nav>
     </div>
-    <div id="crosswords" class="main two-column">
-		<div id="crossword">To create your half a crossword, enter some words in the panel on the left.</br>Or for a quick demo click here: <button id="demo">demo</button></div>
-	  </br>
-		<div id="clues-wrapper">
-			<div id="clues-header"></div><table id="clues"></table>
+    <div id="column-two" class="main column-two">
+		<div id="student-puzzles">
+			<div id="instruction" class="no-print">To create a half a crossword puzzle, type (or paste) some words in the wordlist panel on the left.</br>Click the gear <img width="15px" src="numbers/settings.svg"> on the left to customize the font, title and size of your puzzle.</br></br>Or for a quick demo click here: <button class="demo" id="demo">demo</button></div>
+		</div>
+		<div id="key-page">
+			<div id="key-wrapper">
+				<div id="key-header"></div>
+				<div id="key-puzzle"></div>
+			</div>
 		</div>
     </div>
   </div>
+  <div id="settings" class="popup">
+  <a href="#" class="close">&times;</a>
+  <h1>Settings</h1>
+  </br></br>
+  <input id="cross-topic" placeholder="Enter a title here." autofocus>
+  <p>This popup can be closed by clicking the fancy <b>×</b> in the top right corner or by clicking outside the popup box!</p>
+</div>
+<a href="#" class="close-popup"></a>
 </div>
 </body>
-<script type="text/javascript" src="crossword.min.js"></script>
+<script type="text/javascript" src="crossword.js"></script>
 </html>
